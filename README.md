@@ -16,7 +16,7 @@ Now the application will have the ability to recommend draft picks based on thes
 
 <ol>
     <li>
-        Start the application with `python cli.py`.
+        Start the application with <code>python cli.py</code>.
         <br/>
         <img 
             src="readme_images/start_cli.png" 
