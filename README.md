@@ -1,6 +1,6 @@
 # Sleeper Draft Buddy
 
-A web app and command-line interface (CLI) tool designed to assist with fantasy football drafts on Sleeper. It provides live draft recommendations based on Underdog Fantasy NFL rankings and real-time draft data from the Sleeper API.
+A web app and a command-line interface (CLI) tool designed to assist with fantasy football drafts on Sleeper. It provides live draft recommendations based on Underdog Fantasy NFL rankings and real-time draft data from the Sleeper API.
 
 # Web App
 
