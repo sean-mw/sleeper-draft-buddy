@@ -3,7 +3,7 @@ export interface Player {
     lastName: string;
     position: string;
     adp?: string;
-    positionRank: string;
+    positionRank?: string;
 }
 
 export enum Position {
