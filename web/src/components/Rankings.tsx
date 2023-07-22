@@ -1,9 +1,9 @@
 import { ratioToGreenRedColor, rgbaToString } from '../util/color';
-import { Player, getPlayerId } from '../util/player';
-import './PositionRankings.css';
+import { Player, Position, getPlayerId } from '../util/player';
+import './Rankings.css';
 
-interface PositionRankingsProps {
-    position: string;
+interface RankingsProps {
+    position: Position;
     picks: Set<string>;
     players: Player[];
 }
@@ -21,7 +21,7 @@ function playerAlreadyPicked(player: Player, picks: Set<string>) {
     return picks.has(getPlayerId(player));
 }
 
-export function PositionRankings(props: PositionRankingsProps) {
+export function Rankings(props: RankingsProps) {
   const players = [];
   for (const player of props.players) {
     if (players.length === PLAYER_LIMIT) break;
@@ -31,7 +31,19 @@ export function PositionRankings(props: PositionRankingsProps) {
     players.push(player);
   }
 
+  if (props.position === Position.ALL) {
+    return (
+      <div className="ALL">
+          <Rankings position={Position.WR} picks={props.picks} players={props.players} />
+          <Rankings position={Position.RB} picks={props.picks} players={props.players} />
+          <Rankings position={Position.TE} picks={props.picks} players={props.players} />
+          <Rankings position={Position.QB} picks={props.picks} players={props.players} />
+      </div>
+    )
+  }
+
   return (
+    <>
     <ul>
       {players.map((player: Player, i: number) => {
         const rankLimit = positionRankLimit.get(props.position) ?? 1;
@@ -47,5 +59,6 @@ export function PositionRankings(props: PositionRankingsProps) {
         );
       })}
     </ul>
+    </>
   );
 }

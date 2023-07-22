@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
 import './App.css'
-import { PositionRankings } from './PositionRankings';
+import { Rankings } from './Rankings';
 import { getSleeperDraftPicks } from '../util/sleeper';
 import { getAllUnderdogPlayers } from '../util/underdog';
-import { Player, getPlayerId } from '../util/player';
-
+import { Player, getPlayerId, Position } from '../util/player';
+import { SelectionRadio } from './SelectionRadio';
 
 function App() {
   const [draftId, setDraftId] = useState("");
   const [picks, setPicks] = useState<Set<string>>(new Set());
   const [players, setPlayers] = useState<Player[]>([]);
+  const [rankingSelection, setRankingSelection] = useState<Position>(
+    Position.ALL
+  );
 
   useEffect(() => {
     getAllUnderdogPlayers(setPlayers);
@@ -33,17 +36,20 @@ function App() {
   function handleStart(e: React.MouseEvent) {
     e.preventDefault();
     updatePicks();
-    setInterval(updatePicks, 5000);
+    setInterval(updatePicks, 1000);
   }
+
 
   if (players.length !== 0 && picks.size !== 0) {
     return (
-      <div className="rankings">
-        <PositionRankings position="WR" picks={picks} players={players} />
-        <PositionRankings position="RB" picks={picks} players={players} />
-        <PositionRankings position="TE" picks={picks} players={players} />
-        <PositionRankings position="QB" picks={picks} players={players} />
-      </div>
+      <>
+        <SelectionRadio setRankingSelection={setRankingSelection}/>
+        <Rankings
+          position={rankingSelection}
+          picks={picks}
+          players={players}
+        />
+      </>
     );
   } else {
     return (

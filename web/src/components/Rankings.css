@@ -1,0 +1,16 @@
+.ALL {
+    display: flex;
+    flex-direction: row;
+}
+
+ul {
+    list-style-type: none;
+    padding: 5px;
+}
+
+ul li {
+    padding: 5px;
+    text-align: left;
+    border: 2px solid black;
+    border-radius: 10px;
+}

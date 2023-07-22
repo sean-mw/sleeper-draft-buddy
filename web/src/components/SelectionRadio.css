@@ -1,0 +1,23 @@
+.radio {
+    margin: auto;
+    padding: 10px;
+}
+
+input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+  
+label {
+    position: relative;
+    padding: 8px 16px; 
+    margin: 3px;
+    border: 1px solid white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+input[type="radio"]:checked+label {
+    background-color: gray;
+}
