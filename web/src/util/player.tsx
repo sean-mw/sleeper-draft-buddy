@@ -7,13 +7,20 @@ export interface Player {
 }
 
 export enum Position {
-  WR="WR",
-  RB="RB",
-  QB="QB",
-  TE="TE",
-  ALL="ALL",
+  WR = "WR",
+  RB = "RB",
+  QB = "QB",
+  TE = "TE",
+  ALL = "ALL",
+}
+
+function cleanString(s: string): string {
+    return s.replace(/[^A-Za-z]/g, "").toLowerCase();
 }
 
 export function getPlayerId(player: Player): string {
-    return `${player.firstName}-${player.lastName}-${player.position}`
+    const first = cleanString(player.firstName);
+    const last = cleanString(player.lastName);
+    const pos = cleanString(player.position);
+    return `${first}-${last}-${pos}`
 }
