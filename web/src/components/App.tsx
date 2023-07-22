@@ -53,14 +53,16 @@ function App() {
     );
   } else {
     return (
-      <>
+      <div className="main-menu">
         <input
+          className="draft-id-input"
           type="text"
           value={draftId}
+          placeholder="DRAFT ID"
           onChange={(e) => setDraftId(e.target.value)}
         />
-        <button onClick={handleStart}>Start</button>
-      </>
+        <button className="start-button" onClick={handleStart}>START</button>
+      </div>
     );
   }
 }

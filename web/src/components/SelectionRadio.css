@@ -18,6 +18,10 @@ label {
     cursor: pointer;
 }
 
+label:hover {
+    background-color: gray;
+}
+
 input[type="radio"]:checked+label {
     background-color: gray;
 }

@@ -40,3 +40,31 @@
 .read-the-docs {
   color: #888;
 }
+
+.main-menu {
+  display: flex;
+}
+
+.start-button {
+  margin: 5px;
+}
+
+.draft-id-input {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px;
+  font-family: inherit;
+}
+
+.draft-id-input:hover {
+  border: 1px solid white;
+  border-radius: 10px;
+}
+
+.draft-id-input:focus,
+.draft-id-input:focus-visible {
+  outline: none;
+  border: 1px solid white;
+  border-radius: 10px;
+}
