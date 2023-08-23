@@ -68,6 +68,11 @@ export async function getSleeperKeepers(leagueId: string): Promise<Player[]> {
   }));
 }
 
+export async function isValidDraftId(draftId: string): Promise<boolean> {
+  const response = await fetch(SLEEPER_API + `/draft/${draftId}`);
+  return (response.status === 200);
+}
+
 async function getSleeperPlayer(playerId: string): Promise<Player> {
   const sleeperPlayer = (await sleeperPlayers)[playerId];
   if (sleeperPlayer == undefined) {

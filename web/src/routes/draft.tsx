@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Rankings } from "../components/Rankings";
-import { getSleeperDraftPicks, getSleeperKeepers, getSleeperLeagueId } from "../util/sleeper";
+import { getSleeperDraftPicks, getSleeperKeepers, getSleeperLeagueId, isValidDraftId } from "../util/sleeper";
 import { getAllUnderdogPlayers } from "../util/underdog";
 import { Player, getPlayerId, Position } from "../util/player";
 import { SelectionRadio } from "../components/SelectionRadio";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
   
 export function Draft() {
+  const navigate = useNavigate();
   const draftId = useLoaderData() as string;
   const [picks, setPicks] = useState<Set<string>>(new Set());
   const [players, setPlayers] = useState<Player[]>([]);
@@ -15,6 +16,13 @@ export function Draft() {
   );
 
   useEffect(() => {
+    isValidDraftId(draftId)
+      .then((isValid) => {
+        if (!isValid) navigate("/");
+        return isValid;
+      })
+      .catch(() => console.error);
+
     const leagueId = getSleeperLeagueId(draftId);
     const keeperIds = leagueId
       .then(async (leagueId) => {
@@ -36,8 +44,16 @@ export function Draft() {
 
     getAllUnderdogPlayers(setPlayers);
     updatePicks().catch(console.error);
-    setInterval(() => {updatePicks().catch(console.error)}, 1000);
-  }, [draftId]);
+    const updateTimeout = setInterval(() => {
+      updatePicks().catch(console.error)
+    }, 1000);
+
+    return () => {
+      if (updateTimeout) {
+        clearTimeout(updateTimeout);
+      }
+    }
+  }, [draftId, navigate]);
 
   return (
     <>
