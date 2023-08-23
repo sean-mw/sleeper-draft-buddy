@@ -1,0 +1,19 @@
+.page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 92%;
+    height: 96%;
+    padding-top: 2%;
+    padding-left: 4%;
+}
+
+.nav {
+    text-align: left;
+    margin-top: 10px;
+}
+
+.content {
+    margin-top: 10px;
+    text-align: center;
+}
