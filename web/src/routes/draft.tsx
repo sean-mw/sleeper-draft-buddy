@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Rankings } from "../components/Rankings";
-import { getSleeperDraftPicks } from "../util/sleeper";
+import { getSleeperDraftPicks, getSleeperKeepers, getSleeperLeagueId } from "../util/sleeper";
 import { getAllUnderdogPlayers } from "../util/underdog";
 import { Player, getPlayerId, Position } from "../util/player";
 import { SelectionRadio } from "../components/SelectionRadio";
@@ -15,24 +15,28 @@ export function Draft() {
   );
 
   useEffect(() => {
-    function updatePicks() {
-        getSleeperDraftPicks(draftId)
-        .then((players: Player[]) => {
-            const picks = new Set<string>();
-            for (const player of players) {
-            picks.add(getPlayerId(player));
-            }
-            setPicks(picks);
-        })
-        .catch((e) => {
-            console.log(e);
-            throw new Error("Failed to update picks.");
-        });
+    const leagueId = getSleeperLeagueId(draftId);
+    const keeperIds = leagueId
+      .then(async (leagueId) => {
+        if (leagueId === null) return [];
+        const keepers = await getSleeperKeepers(leagueId);
+        return keepers.map((player) => getPlayerId(player));
+      })
+      .catch((e) => {
+        console.log(e);
+        return [] as string[]
+      });
+
+    async function updatePicks() {
+        const players = await getSleeperDraftPicks(draftId)
+        const playerIds = players.map((player) => getPlayerId(player));
+        const picks = new Set<string>(playerIds.concat(await keeperIds));
+        setPicks(picks);
     }
 
     getAllUnderdogPlayers(setPlayers);
-    updatePicks();
-    setInterval(updatePicks, 1000);
+    updatePicks().catch(console.error);
+    setInterval(() => {updatePicks().catch(console.error)}, 1000);
   }, [draftId]);
 
   return (
