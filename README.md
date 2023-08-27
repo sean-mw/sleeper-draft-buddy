@@ -24,7 +24,7 @@ Now the application will have the ability to recommend draft picks based on thes
         cd into the cli directory with <code>cd cli/</code>.
         <br/>
         <img 
-            src="readme_images/cd_cli.png" 
+            src="readme-images/cd_cli.png" 
             alt="cd CLI Screenshot" 
             width=12% 
             height=12%
@@ -34,7 +34,7 @@ Now the application will have the ability to recommend draft picks based on thes
         Start the application with <code>python cli.py</code>.
         <br/>
         <img 
-            src="readme_images/start_cli.png" 
+            src="readme-images/start-cli.png" 
             alt="Start CLI Screenshot" 
             width=20% 
             height=20%
@@ -44,7 +44,7 @@ Now the application will have the ability to recommend draft picks based on thes
         Enter your Sleeper draft ID. This can be found in your Sleeper draft URL.
         <br/>
         <img 
-            src="readme_images/sleeper_draft_id.png" 
+            src="readme-images/sleeper_draft_id.png" 
             alt="Start CLI Screenshot" 
             width=50% 
             height=50%
@@ -54,7 +54,7 @@ Now the application will have the ability to recommend draft picks based on thes
         You're done! The player suggestions will update every 10 seconds, and will not include any players that have already been picked in the draft.
         <br/>
         <img 
-            src="readme_images/pick_suggestions.png" 
+            src="readme-images/pick_suggestions.png" 
             alt="Start CLI Screenshot" 
             width=30% 
             height=30%
