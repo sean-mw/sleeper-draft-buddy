@@ -34,7 +34,7 @@ Now the application will have the ability to recommend draft picks based on thes
         Start the application with <code>python cli.py</code>.
         <br/>
         <img 
-            src="readme-images/start-cli.png" 
+            src="readme-images/start_cli.png" 
             alt="Start CLI Screenshot" 
             width=20% 
             height=20%
