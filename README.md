@@ -6,6 +6,8 @@ A web app and a command-line interface (CLI) tool designed to assist with fantas
 
 https://sleeper-draft-buddy.vercel.app
 
+<img width="800" alt="image" src="https://github.com/sean-mw/sleeper-draft-buddy/assets/29211180/4edba079-cf52-42e9-a36e-23c2526b4114">
+
 # CLI
 ### Data Setup
 
