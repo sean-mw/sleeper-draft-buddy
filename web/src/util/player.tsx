@@ -20,7 +20,7 @@ function cleanString(s: string): string {
 
 export function getPlayerId(player: Player): string {
     const first = cleanString(player.firstName);
-    const last = cleanString(player.lastName);
+    const last = cleanString(player.lastName.split(" ")[0]);
     const pos = cleanString(player.position);
-    return `${first}-${last}-${pos}`
+    return `${first}-${last}-${pos}`;
 }
