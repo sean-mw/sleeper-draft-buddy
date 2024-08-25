@@ -1,15 +1,15 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React from "react";
+import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
   RouterProvider,
   type RouteObject,
 } from "react-router-dom";
-import './index.css'
-import ErrorPage from './error-page.tsx';
-import { Menu } from './routes/menu.tsx';
-import { draftLoader } from './routes/loaders.tsx';
-import { Draft } from './routes/draft.tsx';
+import "./index.css";
+import ErrorPage from "./error-page.tsx";
+import { Menu } from "./routes/menu.tsx";
+import { draftLoader } from "./routes/loaders.tsx";
+import { Draft } from "./routes/draft.tsx";
 
 const routes: RouteObject[] = [
   {
@@ -26,8 +26,8 @@ const routes: RouteObject[] = [
 ];
 const router = createBrowserRouter(routes);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>,
-)
+);

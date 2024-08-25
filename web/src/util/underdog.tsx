@@ -1,5 +1,5 @@
-import { parse, ParseResult } from 'papaparse';
-import { Player } from './player';
+import { parse, ParseResult } from "papaparse";
+import { Player } from "./player";
 
 interface UnderdogPlayer {
   adp: string;
@@ -9,7 +9,9 @@ interface UnderdogPlayer {
   positionRank: string;
 }
 
-export function getAllUnderdogPlayers(setPlayers: React.Dispatch<React.SetStateAction<Player[]>>) {
+export function getAllUnderdogPlayers(
+  setPlayers: React.Dispatch<React.SetStateAction<Player[]>>,
+) {
   parse("/data/rankings.csv", {
     header: true,
     download: true,
@@ -22,8 +24,8 @@ export function getAllUnderdogPlayers(setPlayers: React.Dispatch<React.SetStateA
           lastName: p.lastName,
           position: p.slotName,
           adp: p.adp,
-          positionRank: p.positionRank.replace(/\D/g,''),
-        }
+          positionRank: p.positionRank.replace(/\D/g, ""),
+        };
       });
       setPlayers(players);
     },
