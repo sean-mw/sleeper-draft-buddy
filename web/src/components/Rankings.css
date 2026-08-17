@@ -1,18 +1,20 @@
 .ALL {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 ul {
-    list-style-type: none;
-    padding: 5px;
+  list-style-type: none;
+  padding: 5px;
 }
 
 ul li {
-    padding: 5px;
-    margin: auto;
-    text-align: left;
-    border: 2px solid black;
-    border-radius: 10px;
-    max-width: 500px;
+  padding: 8px 16px;
+  margin: auto;
+  text-align: left;
+  border: 2px solid black;
+  border-radius: 10px;
+  max-width: 400px;
 }
+

@@ -9,25 +9,28 @@ interface UnderdogPlayer {
   positionRank: string;
 }
 
-export function getAllUnderdogPlayers(
-  setPlayers: React.Dispatch<React.SetStateAction<Player[]>>,
-) {
-  parse("/data/rankings.csv", {
-    header: true,
-    download: true,
-    skipEmptyLines: true,
-    delimiter: ",",
-    complete: (results: ParseResult<UnderdogPlayer>) => {
-      const players = results.data.map((p: UnderdogPlayer) => {
-        return {
-          firstName: p.firstName,
-          lastName: p.lastName,
-          position: p.slotName,
-          adp: p.adp,
-          positionRank: p.positionRank.replace(/\D/g, ""),
-        };
-      });
-      setPlayers(players);
-    },
+export function getAllUnderdogPlayers(): Promise<Player[]> {
+  return new Promise((res, _rej) => {
+    parse("/data/underdog-rankings.csv", {
+      header: true,
+      download: true,
+      skipEmptyLines: true,
+      delimiter: ",",
+      complete: (results: ParseResult<UnderdogPlayer>) => {
+        const underdogPlayers = results.data;
+        const players = underdogPlayers.map(underdogPlayerToPlayer);
+        res(players);
+      },
+    });
   });
+}
+
+function underdogPlayerToPlayer(p: UnderdogPlayer): Player {
+  return {
+    firstName: p.firstName,
+    lastName: p.lastName,
+    position: p.slotName,
+    underdogAdp: p.adp,
+    positionRank: p.positionRank.replace(/\D/g, ""),
+  };
 }

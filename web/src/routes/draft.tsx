@@ -6,11 +6,16 @@ import {
   getSleeperLeagueId,
   isValidDraftId,
 } from "../util/sleeper";
-import { getAllUnderdogPlayers } from "../util/underdog";
-import { Player, getPlayerId, Position } from "../util/player";
+import { Player, getPlayerId, Position, getPlayers } from "../util/player";
 import { SelectionRadio } from "../components/SelectionRadio";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import "./draft.css";
+import {
+  SortFn,
+  sortByUnderdogAdp,
+  sortFnLabels,
+  toggleSortBy,
+} from "../util/sort";
 
 export function Draft() {
   const navigate = useNavigate();
@@ -20,6 +25,7 @@ export function Draft() {
   const [rankingSelection, setRankingSelection] = useState<Position>(
     Position.ALL,
   );
+  const [sort, setSort] = useState<SortFn>(() => sortByUnderdogAdp);
 
   useEffect(() => {
     isValidDraftId(draftId)
@@ -48,7 +54,9 @@ export function Draft() {
       setPicks(picks);
     }
 
-    getAllUnderdogPlayers(setPlayers);
+    getPlayers()
+      .then((players: Player[]) => setPlayers(players))
+      .catch((e) => console.error(e));
     updatePicks().catch(console.error);
     const updateTimeout = setInterval(() => {
       updatePicks().catch(console.error);
@@ -81,8 +89,18 @@ export function Draft() {
         </button>
       </div>
       <div className="content">
-        <SelectionRadio setRankingSelection={setRankingSelection} />
-        <Rankings position={rankingSelection} picks={picks} players={players} />
+        <div>
+          <SelectionRadio setRankingSelection={setRankingSelection} />
+          <button onClick={() => setSort((prev: SortFn) => toggleSortBy(prev))}>
+            Sort By: {sortFnLabels.get(sort) ?? "Unknown"}
+          </button>
+        </div>
+        <Rankings
+          position={rankingSelection}
+          picks={picks}
+          players={players}
+          sort={sort}
+        />
       </div>
     </div>
   );

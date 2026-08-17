@@ -6,6 +6,7 @@ interface RankingsProps {
   position: Position;
   picks: Set<string>;
   players: Player[];
+  sort: (a: Player, b: Player) => number;
 }
 
 const PLAYER_LIMIT = 10;
@@ -23,7 +24,7 @@ function playerAlreadyPicked(player: Player, picks: Set<string>) {
 
 export function Rankings(props: RankingsProps) {
   const players = [];
-  for (const player of props.players) {
+  for (const player of props.players.sort(props.sort)) {
     if (players.length === PLAYER_LIMIT) break;
     const correctPosition = player.position === props.position;
     const picked = playerAlreadyPicked(player, props.picks);
@@ -38,21 +39,25 @@ export function Rankings(props: RankingsProps) {
           position={Position.WR}
           picks={props.picks}
           players={props.players}
+          sort={props.sort}
         />
         <Rankings
           position={Position.RB}
           picks={props.picks}
           players={props.players}
+          sort={props.sort}
         />
         <Rankings
           position={Position.TE}
           picks={props.picks}
           players={props.players}
+          sort={props.sort}
         />
         <Rankings
           position={Position.QB}
           picks={props.picks}
           players={props.players}
+          sort={props.sort}
         />
       </div>
     );
@@ -76,9 +81,12 @@ export function Rankings(props: RankingsProps) {
               style={{ background: backgroundStyle }}
               key={`${i}-${getPlayerId(player)}`}
             >
-              [{props.position}
-              {player.positionRank}] {player.firstName} {player.lastName} (ADP:{" "}
-              {player.adp})
+              <div>
+                [{props.position}
+                {player.positionRank}] {player.firstName} {player.lastName}
+              </div>
+              <div>UNDERDOG ADP: {player.underdogAdp}</div>
+              <div>NFFC ADP: {player.nffcAdp}</div>
             </li>
           );
         })}
