@@ -2,9 +2,16 @@ import { Player } from "./player";
 
 export type SortFn = typeof sortByUnderdogAdp | typeof sortByNffcAdp;
 
-export const sortFnLabels = new Map<SortFn, string>([
-  [sortByUnderdogAdp, "Underdog ADP"],
-  [sortByNffcAdp, "NFFC ADP"],
+export type SortKey = "nffc" | "underdog";
+
+export const adpSortLabels = new Map<SortKey, string>([
+  ["underdog", "Underdog ADP"],
+  ["nffc", "NFFC ADP"],
+]);
+
+export const sortFns = new Map<SortKey, SortFn>([
+  ["underdog", sortByUnderdogAdp],
+  ["nffc", sortByNffcAdp],
 ]);
 
 export function sortByUnderdogAdp(a: Player, b: Player): number {
@@ -21,9 +28,16 @@ export function sortByNffcAdp(a: Player, b: Player): number {
   return parseFloat(a.nffcAdp) - parseFloat(b.nffcAdp);
 }
 
-export function toggleSortBy(prev: SortFn): SortFn {
-  if (prev === sortByUnderdogAdp) {
-    return sortByNffcAdp;
+export function toggleSortKey(prev: SortKey): SortKey {
+  if (prev === "underdog") {
+    return "nffc";
   }
-  return sortByUnderdogAdp;
+  return "underdog";
+}
+
+export function getPositionRankBySortKey(key: SortKey, p: Player) {
+  if (key === "underdog") {
+    return p.underdogPositionRank;
+  }
+  return p.nffcPositionRank;
 }

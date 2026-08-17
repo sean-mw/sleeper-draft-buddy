@@ -10,12 +10,7 @@ import { Player, getPlayerId, Position, getPlayers } from "../util/player";
 import { SelectionRadio } from "../components/SelectionRadio";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import "./draft.css";
-import {
-  SortFn,
-  sortByUnderdogAdp,
-  sortFnLabels,
-  toggleSortBy,
-} from "../util/sort";
+import { SortKey, adpSortLabels, toggleSortKey } from "../util/sort";
 
 export function Draft() {
   const navigate = useNavigate();
@@ -25,7 +20,7 @@ export function Draft() {
   const [rankingSelection, setRankingSelection] = useState<Position>(
     Position.ALL,
   );
-  const [sort, setSort] = useState<SortFn>(() => sortByUnderdogAdp);
+  const [sortKey, setSortKey] = useState<SortKey>("underdog");
 
   useEffect(() => {
     isValidDraftId(draftId)
@@ -43,7 +38,7 @@ export function Draft() {
         return keepers.map((player) => getPlayerId(player));
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
         return [] as string[];
       });
 
@@ -91,15 +86,15 @@ export function Draft() {
       <div className="content">
         <div>
           <SelectionRadio setRankingSelection={setRankingSelection} />
-          <button onClick={() => setSort((prev: SortFn) => toggleSortBy(prev))}>
-            Sort By: {sortFnLabels.get(sort) ?? "Unknown"}
+          <button onClick={() => setSortKey(toggleSortKey)}>
+            Sort By: {adpSortLabels.get(sortKey) ?? "Unknown"}
           </button>
         </div>
         <Rankings
           position={rankingSelection}
           picks={picks}
           players={players}
-          sort={sort}
+          sortKey={sortKey}
         />
       </div>
     </div>

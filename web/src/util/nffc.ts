@@ -1,5 +1,5 @@
 import { parse, ParseResult } from "papaparse";
-import { Player } from "./player";
+import { isPosition, Player, Position } from "./player";
 
 interface NffcPlayer {
   ADP: string;
@@ -15,11 +15,20 @@ export function getAllNffcPlayers(): Promise<Player[]> {
       skipEmptyLines: true,
       delimiter: ",",
       complete: (results: ParseResult<NffcPlayer>) => {
+        const rankCount = new Map<Position, number>();
         const nffcPlayers = results.data;
         const players = nffcPlayers
           .map(nffcPlayerToPlayer)
           .filter((p: Player) => {
             return p.position !== "TDSP" && p.position !== "TK";
+          })
+          .map((p: Player): Player => {
+            if (!isPosition(p.position)) {
+              return { ...p, nffcPositionRank: "-1" };
+            }
+            const prevCount = rankCount.get(p.position) ?? 0;
+            rankCount.set(p.position, prevCount + 1);
+            return { ...p, nffcPositionRank: (prevCount + 1).toString() };
           });
         res(players);
       },

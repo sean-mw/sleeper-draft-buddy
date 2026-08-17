@@ -31,6 +31,6 @@ function underdogPlayerToPlayer(p: UnderdogPlayer): Player {
     lastName: p.lastName,
     position: p.slotName,
     underdogAdp: p.adp,
-    positionRank: p.positionRank.replace(/\D/g, ""),
+    underdogPositionRank: p.positionRank.replace(/\D/g, ""),
   };
 }
